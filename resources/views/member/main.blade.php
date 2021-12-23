@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title', 'Produk')
+@section('title', 'Member')
 
 <!-- Header -->
-@section('content-title', 'Produk')
+@section('content-title', 'Member')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Master</a></li>
-    <li class="breadcrumb-item active">Produk</li>
+    <li class="breadcrumb-item active">Member Area</li>
 @endsection
 
 @section('content')
@@ -15,13 +15,13 @@
                 <div class="card-header">
                     <button class="btn btn-success" id="btnAdd"><i class="fas fa-plus-circle"> Tambah </i></button>
                     <button class="btn btn-danger" id="btnDeleteSemua"><i class="fas fa-trash"> Hapus </i></button>
-                    <button class="btn btn-warning" id="btnCetakBarcode"><i class="fas fa-print">
-                            Cetak Barcode
+                    <button class="btn btn-warning" id="btnCetakMember"><i class="fas fa-print">
+                            Cetak Member
                         </i></button>
                 </div>
                 <div class="card-body">
                     <div class="table table-responsive">
-                        <form action="" id="formProduk" method="POST">
+                        <form action="" id="formMember" method="POST">
                             @csrf
                             <table class="table table-bordered table-hover text-center" id="datatable">
                                 <thead>
@@ -29,14 +29,10 @@
                                         <input type="checkbox" name="select_all" id="select_all">
                                     </th>
                                     <th width="3%">No</th>
-                                    <th>Kode Produk</th>
+                                    <th width="20%">Kode member</th>
                                     <th>Nama</th>
-                                    <th>Kategori</th>
-                                    <th>Merk</th>
-                                    <th>Harga beli</th>
-                                    <th>Harga jual</th>
-                                    <th>Diskon</th>
-                                    <th>Stok</th>
+                                    <th>Alamat</th>
+                                    <th>Telepon</th>
                                     <th>Aksi</th>
                                 </thead>
                                 <tbody>
@@ -50,7 +46,7 @@
     </div>
 
 
-    @include('produk.modal')
+    @include('member.modal')
 
 
 @endsection
@@ -82,8 +78,7 @@
                 processing: true,
                 autoWidth: false,
                 destroy: true,
-                serverSide: true,
-                ajax: "{{ route('getProduk') }}",
+                ajax: "{{ route('getMember') }}",
                 columns: [{
                         data: 'select_all',
                         searchable: false,
@@ -96,36 +91,20 @@
                         sortable: false,
                     },
                     {
-                        data: 'kode_produk',
-                        name: 'kode_produk'
+                        data: 'kode_member',
+                        name: 'kode_member'
                     },
                     {
-                        data: 'nama_produk',
-                        name: 'nama_produk'
+                        data: 'nama',
+                        name: 'nama'
                     },
                     {
-                        data: 'nama_kategori',
-                        name: 'nama_kategori'
+                        data: 'alamat',
+                        name: 'alamat'
                     },
                     {
-                        data: 'merk',
-                        name: 'merk'
-                    },
-                    {
-                        data: 'harga_jual',
-                        name: 'harga_jual'
-                    },
-                    {
-                        data: 'harga_beli',
-                        name: 'harga_beli'
-                    },
-                    {
-                        data: 'diskon',
-                        name: 'diskon'
-                    },
-                    {
-                        data: 'stok',
-                        name: 'stok'
+                        data: 'telepon',
+                        name: 'telepon'
                     },
                     {
                         data: 'aksi',
@@ -140,19 +119,20 @@
         $('#btnAdd').click(function(e) {
             $('#modal').modal('show')
             $('#modal form')[0].reset()
-            $('#judulModal').html('Tambah Produk')
+            $('.print-error-msg').hide()
+            $('#judulModal').html('Tambah Member')
             $('#id_kategori').select2()
             statuscrud = 'c'
         });
 
         $('#btnDeleteSemua').click(function(e) {
-            let form = $('#formProduk').serialize()
+            let form = $('#formMember').serialize()
             let id = $(this).attr('id')
             if (confirm('Yakin untuk menghapus data yang dipilih ?')) {
                 if ($('input:checked').length > 1) {
                     $.ajax({
                         type: "POST",
-                        url: "{{ route('deleteSelectProduk', '') }}" + "/" + id,
+                        url: "{{ route('deleteSelectMember', '') }}" + "/" + id,
                         data: form,
                         dataType: "json",
                         success: function(res) {
@@ -167,14 +147,14 @@
             }
         });
 
-        $('#btnCetakBarcode').click(function(e) {
-            let form = $('#formProduk').serialize()
+        $('#btnCetakMember').click(function(e) {
+            let form = $('#formMember').serialize()
             if ($('input:checked').length < 1) {
                 alert('Pilih data yang akan dicetak !')
             } else if ($('input:checked').length < 3) {
                 alert('Pilih data minimal 3 !')
             } else {
-                $('#formProduk').attr('action', '{{ route('cetakBarcode') }}').attr('target', '_blank').submit()
+                $('#formMember').attr('action', '{{ route('cetakMember') }}').attr('target', '_blank').submit()
             }
 
         });
@@ -185,7 +165,7 @@
             if (statuscrud == 'c') {
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('addProduk') }}",
+                    url: "{{ route('addMember') }}",
                     data: form,
                     dataType: "json",
                     success: function(res) {
@@ -195,12 +175,19 @@
                             icon: 'success',
                             title: 'Tambah data berhasil'
                         })
+                    },
+                    error(xhr) {
+                        if ($.isEmptyObject(xhr.responseJSON.error)) {
+                            // alert(xhr.success);
+                        } else {
+                            printErrorMsg(xhr.responseJSON.error);
+                        }
                     }
                 });
             } else if (statuscrud == 'u') {
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('updateProduk') }}",
+                    url: "{{ route('updateMember') }}",
                     data: form,
                     dataType: "json",
                     success: function(res) {
@@ -210,7 +197,13 @@
                             icon: 'success',
                             title: 'Update data berhasil'
                         })
-
+                    },
+                    error(xhr) {
+                        if ($.isEmptyObject(xhr.responseJSON.error)) {
+                            // alert(xhr.success);
+                        } else {
+                            printErrorMsg(xhr.responseJSON.error);
+                        }
                     }
                 });
             }
@@ -222,22 +215,23 @@
             statuscrud = 'u'
             $.ajax({
                 type: "get",
-                url: "{{ route('editProduk', '') }}" + "/" + id,
+                url: "{{ route('editMember', '') }}" + "/" + id,
                 data: id,
                 dataType: "json",
                 success: function(res) {
                     $('#modal').modal('show')
-                    $('#judulModal').html('Edit Produk')
-                    $('#id_produk').val(res.data[0].id_produk)
-                    $('#nama_produk').val(res.data[0].nama_produk)
-                    $('#merk').val(res.data[0].merk)
-                    $('#harga_beli').val(res.data[0].harga_beli)
-                    $('#harga_jual').val(res.data[0].harga_jual)
-                    $('#diskon').val(res.data[0].diskon)
-                    $('#stok').val(res.data[0].stok)
-                    $('#id_kategori').val(res.data[0].id_kategori).trigger('change')
-                    console.log(res.data[0].nama_kategori)
-                    console.log(res.data[0])
+                    $('#judulModal').html('Edit Member')
+                    $('#id_member').val(res.data.id_member)
+                    $('#nama').val(res.data.nama)
+                    $('#alamat').val(res.data.alamat)
+                    $('#telepon').val(res.data.telepon)
+                    // $('#nama_Member').val(res.data[0].nama_Member)
+                    // $('#merk').val(res.data[0].merk)
+                    // $('#harga_beli').val(res.data[0].harga_beli)
+                    // $('#harga_jual').val(res.data[0].harga_jual)
+                    // $('#diskon').val(res.data[0].diskon)
+                    // $('#stok').val(res.data[0].stok)
+                    // $('#id_kategori').val(res.data[0].id_kategori).trigger('change')
                 }
             });
         });
@@ -250,7 +244,7 @@
             if (c) {
                 $.ajax({
                     type: "post",
-                    url: "{{ route('deleteProduk', '') }}" + "/" + id,
+                    url: "{{ route('deleteMember', '') }}" + "/" + id,
                     data: form,
                     dataType: "json",
                     success: function(res) {
@@ -270,12 +264,6 @@
 
         $('#id_kategori').select2()
 
-        function printErrorMsg(msg) {
-            $.each(msg, function(key, value) {
-                console.log(key);
-                $('.' + key + '_err').text(value);
-            });
-        }
 
         $('#select_all').click(function(e) {
             $(':checkbox').prop('checked', this.checked);

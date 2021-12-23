@@ -60,3 +60,8 @@ function generateProduk($value, $max = null)
 {
     return Str::upper(Str::substr($value, 0, 3) . '00');
 }
+
+function generateMember($value, $tgl, $max = null)
+{
+    return Str::upper(Str::substr($value, 0, 3)) . '-' . $tgl;
+}

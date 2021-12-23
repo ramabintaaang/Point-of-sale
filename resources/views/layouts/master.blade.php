@@ -111,6 +111,7 @@
         <script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
         <!-- select2 -->
         <script src="{{ asset('adminlte/plugins/select2/js/select2.min.js') }}"></script>
+        <script src="{{asset('js/custom.js')}}"></script>
         @stack('js')
 </body>
 

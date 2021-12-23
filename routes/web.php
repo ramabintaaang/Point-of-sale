@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\SupplierController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -43,6 +45,26 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('deleteSelectProduk/{id}', [ProdukController::class, 'deleteSelectProduk'])->name('deleteSelectProduk');
     Route::get('getProduk', [ProdukController::class, 'getProduk'])->name('getProduk');
     Route::post('cetakBarcode', [ProdukController::class, 'cetakBarcode'])->name('cetakBarcode');
+
+
+    ///Member
+    Route::get('member', [MemberController::class, 'index'])->name('member');
+    Route::post('addMember', [MemberController::class, 'addMember'])->name('addMember');
+    Route::get('editMember/{id}', [MemberController::class, 'editMember'])->name('editMember');
+    Route::post('updateMember', [MemberController::class, 'updateMember'])->name('updateMember');
+    Route::post('deleteMember/{id}', [MemberController::class, 'deleteMember'])->name('deleteMember');
+    Route::post('deleteSelectMember/{id}', [MemberController::class, 'deleteSelectMember'])->name('deleteSelectMember');
+    Route::get('getMember', [MemberController::class, 'getMember'])->name('getMember');
+    Route::post('cetakMember', [MemberController::class, 'cetakMember'])->name('cetakMember');
+
+
+    ///Supplier
+    Route::get('supplier', [SupplierController::class, 'index'])->name('supplier');
+    Route::post('addSupplier', [SupplierController::class, 'addSupplier'])->name('addSupplier');
+    Route::get('editSupplier/{id}', [SupplierController::class, 'editSupplier'])->name('editSupplier');
+    Route::post('updateSupplier', [SupplierController::class, 'updateSupplier'])->name('updateSupplier');
+    Route::post('deleteSupplier/{id}', [SupplierController::class, 'deleteSupplier'])->name('deleteSupplier');
+    Route::get('getSupplier', [SupplierController::class, 'getSupplier'])->name('getSupplier');
 
     // Route::get('optionKategori', [ProdukController::class, 'optionKategori'])->name('optionKategori');
 });

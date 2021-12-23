@@ -37,7 +37,7 @@ class ProdukController extends Controller
     public function getProduk(Request $request)
     {
         $data = DB::select('SELECT a.* , b.nama_kategori FROM produk a LEFT JOIN kategori b on a.id_kategori = b.id_kategori 
-        ORDER BY a.id_produk DESC');
+        ORDER BY a.kode_produk DESC');
 
         if ($request->ajax()) {
             return Datatables::of($data)

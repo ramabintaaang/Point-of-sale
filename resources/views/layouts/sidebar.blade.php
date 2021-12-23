@@ -26,7 +26,8 @@
                 <!-- Add icons to the links using the .nav-icon class
         with font-awesome or any other icon font library -->
                 <li class="nav-item has-treeview">
-                    <a href="" class="nav-link {{ request()->is('dashboard', 'kategori', 'produk') ? 'active' : '' }}">
+                    <a href=""
+                        class="nav-link {{ request()->is('dashboard', 'kategori', 'produk', 'member', 'supplier') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Master
@@ -56,13 +57,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./index3.html" class="nav-link">
+                            <a href="{{ route('member') }}"
+                                class="nav-link {{ request()->is('member') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Member</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./index3.html" class="nav-link">
+                            <a href="{{ route('supplier') }}"
+                                class="nav-link {{ request()->is('supplier') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Supplier</p>
                             </a>
