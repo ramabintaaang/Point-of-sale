@@ -74,7 +74,8 @@
                 </li>
                 <li class="nav-header">Transaksi Area</li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="#"
+                        class="nav-link {{ request()->is('pengeluaran', 'pembelian', 'TransaksiPembelian', 'DaftarPenjualan', 'TransaksiPenjualan') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Transaksi
@@ -83,13 +84,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link">
+                            <a href="{{ route('pengeluaran') }}"
+                                class="nav-link {{ request()->is('pengeluaran') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pengeluaran</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link ">
+                            <a href="{{ route('pembelian') }}"
+                                class="nav-link {{ request()->is('pembelian') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Daftar pembelian</p>
                             </a>

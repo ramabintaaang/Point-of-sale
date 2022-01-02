@@ -16,7 +16,7 @@ class SupplierController extends Controller
     }
     public function getSupplier(Request $request)
     {
-        $data = Supplier::all();
+        $data = Supplier::orderBy('nama_supplier')->get();
 
         if ($request->ajax()) {
             return Datatables::of($data)
@@ -50,7 +50,7 @@ class SupplierController extends Controller
             [
                 'nama_supplier' => 'required|min:3',
                 'alamat' => 'required',
-                'telepon' => 'required|integer',
+                'telepon' => 'required|numeric',
                 // 'alamat' => 'required', 'min:3',
                 // 'telepon' => 'required', 'min:3',
                 // 'nama' => 'required', 'min:3'
@@ -97,7 +97,7 @@ class SupplierController extends Controller
             [
                 'nama_supplier' => 'required|min:3|max:40',
                 'alamat' => 'required',
-                'telepon' => 'required|integer',
+                'telepon' => 'required|numeric',
                 // 'alamat' => 'required', 'min:3',
                 // 'telepon' => 'required', 'min:3',
                 // 'nama' => 'required', 'min:3'

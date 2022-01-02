@@ -1,11 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PembelianDetailController;
+use App\Http\Controllers\PengeluaranController;
+use App\Models\PembelianDetail;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -66,6 +70,31 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('deleteSupplier/{id}', [SupplierController::class, 'deleteSupplier'])->name('deleteSupplier');
     Route::get('getSupplier', [SupplierController::class, 'getSupplier'])->name('getSupplier');
 
+
+    ///Pengeluaran
+    Route::get('pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran');
+    Route::post('addPengeluaran', [PengeluaranController::class, 'addPengeluaran'])->name('addPengeluaran');
+    Route::get('editPengeluaran/{id}', [PengeluaranController::class, 'editPengeluaran'])->name('editPengeluaran');
+    Route::post('updatePengeluaran', [PengeluaranController::class, 'updatePengeluaran'])->name('updatePengeluaran');
+    Route::post('deletePengeluaran/{id}', [PengeluaranController::class, 'deletePengeluaran'])->name('deletePengeluaran');
+    Route::get('getPengeluaran', [PengeluaranController::class, 'getPengeluaran'])->name('getPengeluaran');
+
+
+    ///Pembelian
+    Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian');
+    Route::get('dataSupplier/{id}', [PembelianController::class, 'dataSupplier'])->name('dataSupplier');
+    Route::get('dataPembelian/{kode_pembelian}', [PembelianController::class, 'dataPembelian'])->name('dataPembelian');
+    Route::get('getDataSupplier', [PembelianController::class, 'getDataSupplier'])->name('getDataSupplier');
+    Route::get('getDataProduk', [PembelianController::class, 'getDataProduk'])->name('getDataProduk');
+    Route::get('getDataProduk/{id}', [PembelianController::class, 'getDataProdukDetail'])->name('getDataProdukDetail');
+    Route::get('getPembelianDetail', [PembelianController::class, 'getPembelianDetail'])->name('getPembelianDetail');
+    Route::post('addPembelian', [PembelianController::class, 'addPembelian'])->name('addPembelian');
+    Route::get('getPembelian', [PembelianController::class, 'getPembelian'])->name('getPembelian');
+    Route::post('deletePembelian', [PembelianController::class, 'deletePembelian'])->name('deletePembelian');
+    Route::post('deletePembelianFromBatal', [PembelianController::class, 'deletePembelianFromBatal'])->name('deletePembelianFromBatal');
+
+    ///Detail Produk
+    Route::post('addDetailProdukPembelian',[PembelianDetailController::class,'addDetailProdukPembelian'])->name('addDetailProdukPembelian');
     // Route::get('optionKategori', [ProdukController::class, 'optionKategori'])->name('optionKategori');
 });
 

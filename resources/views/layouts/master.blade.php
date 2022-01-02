@@ -7,6 +7,7 @@
     <title>{{ config('app.name') }} | @yield('title')</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
@@ -111,7 +112,7 @@
         <script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
         <!-- select2 -->
         <script src="{{ asset('adminlte/plugins/select2/js/select2.min.js') }}"></script>
-        <script src="{{asset('js/custom.js')}}"></script>
+        <script src="{{ asset('js/custom.js') }}"></script>
         @stack('js')
 </body>
 
