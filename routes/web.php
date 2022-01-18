@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     ///Detail Produk
     Route::post('addDetailProdukPembelian',[PembelianDetailController::class,'addDetailProdukPembelian'])->name('addDetailProdukPembelian');
+    Route::get('getDetailProdukPembelian',[PembelianDetailController::class,'dt_pembelianDetail'])->name('getDetailProdukPembelian');
     // Route::get('optionKategori', [ProdukController::class, 'optionKategori'])->name('optionKategori');
 });
 

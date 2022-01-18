@@ -95,7 +95,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table table-responsive mt-4">
-                    <table class="table table-bordered table-hover" id="datatable">
+                    <table class="table table-bordered table-hover" id="dt_pembelianDetail">
                         <thead>
                             <th width="5%">No</th>
                             <th>Kode Produk</th>

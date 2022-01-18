@@ -173,7 +173,58 @@
                     }
                 ],
             });
-        }
+        };
+
+        function loadPembelianDetail() {
+            $('#dt_pembelianDetail').DataTable({
+                processing: true,
+                autoWidth: false,
+                destroy: true,
+                serverSide: true,
+                ajax: "{{ route('getDetailProdukPembelian') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        sortable: false,
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
+                    {
+                        data: 'kode_pembelian',
+                        name: 'kode_pembelian'
+                    },
+                    {
+                        data: 'nama_supplier',
+                        name: 'nama_supplier'
+                    },
+                    {
+                        data: 'total_item',
+                        name: 'total_item'
+                    },
+                    {
+                        data: 'total_harga',
+                        name: 'total_harga'
+                    },
+                    {
+                        data: 'diskon',
+                        name: 'diskon'
+                    },
+                    {
+                        data: 'bayar',
+                        name: 'bayar'
+                    },
+                    {
+                        data: 'aksi',
+                        name: 'aksi',
+                        orderable: false
+                    }
+                ],
+            });
+        };
+
 
         $('#btnAdd').click(function(e) {
             $('#modalSupplier').modal('show')
@@ -198,6 +249,7 @@
                 },
                 dataType: "json",
                 success: function(res) {
+                    loadPembelianDetail()
                     // console.log(res)
                     // $('#produk').val(res[0].nama_produk)
                     // $('#id_produk').val(res[0].id_produk)
@@ -205,20 +257,20 @@
             });
         });
 
-        function loadPembelian() {
-            let id = $(this).attr('id')
-            $.ajax({
-                type: "get",
-                url: "{{ route('getPembelian', '') }}" + "/" + id,
-                dataType: "json",
-                success: function(res) {
-                    $('#id_pemb').html(res.data[0].id_pembelian)
-                    $('#id_sup').html(res.data[0].id_supplier)
-                    $('#nama_sup').html(res.data[0].nama_supplier)
-                    $('#telp_sup').html(res.data[0].telepon)
-                }
-            });
-        }
+        // function loadPembelian() {
+        //     let id = $(this).attr('id')
+        //     $.ajax({
+        //         type: "get",
+        //         url: "{{ route('getPembelian', '') }}" + "/" + id,
+        //         dataType: "json",
+        //         success: function(res) {
+        //             $('#id_pemb').html(res.data[0].id_pembelian)
+        //             $('#id_sup').html(res.data[0].id_supplier)
+        //             $('#nama_sup').html(res.data[0].nama_supplier)
+        //             $('#telp_sup').html(res.data[0].telepon)
+        //         }
+        //     });
+        // }
 
         function dataPembelian() {
             let id = $(this).attr('id')
@@ -267,6 +319,7 @@
                     $('#nav-profile-tab').html('Transaksi Pembelian')
                     $('#btnAdd').attr('hidden', true)
                     $('#btnBatal').attr('hidden', false)
+                    loadPembelianDetail();
                     dataPembelian();
 
 
